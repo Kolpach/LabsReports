@@ -1,0 +1,68 @@
+#include <stdlib.h> 
+#include <iostream>
+#include <fstream>
+#include <time.h>
+using namespace std;
+int main()
+{
+	srand(time(0));//заполнение первого массива случайными числами
+	const int n = 15;
+	int mas[n];
+	int b[n];
+	for (int i = 0; i < n; i++)
+	{
+		mas[i] = -25 + rand() % 51;
+		cout << mas[i] << ' ';
+	}
+	cout << endl;
+
+
+	fstream a;//создание и заполнение файла 123
+	a.open("1\\123.txt", ios::out);
+	for(int i = 0; i < 15; i++)
+		a << mas[i] << ' ';
+	a << "\r\n";
+	a.close();
+
+
+	a.open("1\\123.txt", ios::in);//считывание массива из файла
+	for (int i = 0; i < n&&!a.eof(); i++)
+		a >> b[i];
+
+	bool end = true;//сортировка и вывод массива
+	while (end)
+	{
+		end = false;
+		for (int i = 1; i < n; i++)
+		{
+			if (b[i] < b[i - 1])
+			{
+				int y = b[i - 1];
+				b[i - 1] = b[i];
+				b[i] = y;
+				end = true;
+			}
+		}
+	}
+	for (int i = 0; i < n; i++)
+		cout << b[i] << ' ';
+	cout << endl;
+	a.close();
+
+
+	a.open("1\\bin.txt", ios::binary | ios::out);
+	a.write((char*)b, sizeof b);//запись в бинарный файл массива
+	a.close();
+
+
+	a.open("1\\bin.txt", ios::binary | ios::in);//открытие бинарного файла для чтения
+	int test[n] = {};
+	a.read((char*)test, sizeof test);//Чтение из бинарного файла
+	for (int i = 0; i < n; i++)
+		cout << test[i] << ' ';
+	cout << endl;
+	a.close();
+
+	system("PAUSE");
+	return 0;
+}

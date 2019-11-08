@@ -1,0 +1,5 @@
+a=int(input('Введите a\n'))
+b=int(input('Введите b\n'))
+c=int(input('Введите c\n'))
+k=int(input('Введите k\n'))
+print( abs((pow(a,2)/pow(b,2) + pow(c,2) * pow(a,2))/(a + b + c * ( k - a / pow(b,3) )) + c + ( k/b - k/a ) * c ))

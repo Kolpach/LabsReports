@@ -1,0 +1,5 @@
+set Path=C:\Program Files (x86)\codeblocks-17.12mingw\MinGW\bin
+g++ -E Desktop\source.cpp -o Desktop\source.ii
+g++ -S Desktop\source.ii -o Desktop\source.s
+as Desktop\source.s -o Desktop\Sorce.o
+g++ Desktop\Sorce.o -o Desktop\Source

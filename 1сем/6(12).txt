@@ -1,0 +1,67 @@
+#include <iostream>
+#include <string>
+#include <stdio.h>
+#include <cmath>
+using namespace std;
+void IntToChar(int nse, int n, char* A, int size)
+{
+	for (int i = size-1; nse != 0; nse /= n, i--)
+		A[i] = char(nse % n) +'0';
+	A[size] = '\0';
+}
+int main()
+{
+	setlocale(0, "");
+	cout << "Введите строку: ";
+	char a[256] = {};
+	gets_s(a);
+
+	int size = -1;	
+	while (a[++size] != '\0');//Количество символов в исходной строке
+		
+	int n, n2;
+	cout << "Введите 1-ую и 2-ую систему счисления" << endl;
+	cin >> n >> n2;
+	string PodStroka = {};
+	for (int i = 0; i < size; i++)
+	{
+		int siz = 1;
+		for (int nloc = n; a[i] >= nloc; siz++, nloc *= n);//определяем количество символов во внешней форме в системе N
+		char* mas = new char[siz + 1];// не забываем, что нужен ещё один элемент для '\0'
+		IntToChar(a[i], n, mas, siz);//Получаем промежуточную строку первого символа
+		PodStroka += mas;
+		delete [] mas;
+	}
+	cout << "Промежуточная строка: " << PodStroka << endl;
+
+	int byteN2=0;
+	for (int i = 0, byte = 256; byte != 0; i++, byte /= n2)//определяем байт в системе счисления n2
+	{
+	byteN2 += (byte % n2)*pow(10, i);
+	}
+	cout<<"Байт: " << byteN2 << endl;
+
+	cout << "Разбиение: ";
+	string final;
+	for (int i = 0, num = 0; PodStroka[i] != '\0'; i++)
+	{ 
+		if ((num*10 + (PodStroka[i] - '0')) < byteN2)
+		{
+			num *= 10;
+			num += (PodStroka[i]-'0');
+			cout << PodStroka[i];
+			if (PodStroka[i + 1] == '\0')
+				final += num;
+		}
+		else
+		{
+			final += num;
+			cout << ' ';
+			num = 0;
+			i--;
+		}
+	}
+	cout << endl<< "Итог: " << final << endl;
+	system("pause");
+	return 0;
+}

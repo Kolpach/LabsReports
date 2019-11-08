@@ -1,0 +1,31 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+double row(double x, double eps, int &n)
+{
+	double s, sn;
+	for (s = 0, sn = x, n = 1; fabs(sn) > eps; n++)
+
+	{
+		s += sn;
+
+		sn = -sn * x / n;
+	}
+	return s;
+}
+int main()
+{
+	setlocale(0, "");
+	int n;
+	cout << "N\t\tX\t\tÐÿä" << endl;
+	for (int i = 1; i <= 12; i++)
+	{
+		double x = (double)i / 10;
+		double c = row(x, 0.0000001, n);
+		cout << n <<"\t\t"<< x << "\t\t" << (int)(c * 10000) / 10000.0 <<  endl;
+	}
+
+
+	system("pause");
+	return 0;
+}

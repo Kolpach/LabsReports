@@ -1,0 +1,81 @@
+#define show(k,n) for(int i=0; i<n; i++) cout<<k[i]<<' ';cout<<endl
+#include <iostream>
+using namespace std;
+int main()
+{
+	setlocale(0, "");
+	int n;
+	cout << "Введите количество элементов" << endl;
+	cin >> n;
+	int *a = new int[n];
+	int *b = new int[n];
+	int min, max;
+	cout << "Введите n элементов:" << endl;
+	cin >> a[0];
+	b[0] = -1;
+	min = a[0];
+	max = a[0];
+	for (int i = 1; i < n; i++)//заполнение массива и вычисление max и min
+	{
+		cin >> a[i];
+		b[i] = -1;
+		if (a[i] > max)
+			max = a[i];
+		else if (a[i] < min)
+			min = a[i];
+	}
+
+	for (int i = 0, j; i < n; i++)//добавление элементов(предпологая, что большая часть из них линейные)
+	{
+		j = (a[i] - min) *(n-1) / (max - min);
+		if (b[j] == -1)
+		{
+			b[j] = a[i];
+			a[i] = -1;
+		}
+	}
+	show(b, n);
+
+	int n2;
+	for (int i = 0; i < n; i++)
+	{
+		bool end = 0;
+		if (b[i] == -1)
+		{
+			end = 1;
+			for (int j = i + 1; j < n; j++)
+				if (b[j]!=-1)
+				{
+					b[i] = b[j];
+					b[j] = -1;
+					end = 0;
+					break;
+				}
+		}
+		if (end)
+		{
+			n2 = i;
+			break;
+		}
+	}
+	show(b, n2);
+
+	for(int i = 0; i < n; i++)//Добавление недобавленных ранее элементов
+		if (a[i] != -1)
+			b[n2++] = a[i];
+	show(b, n);
+
+	for (int i = 1; i < n; i++) //Сортировка погружением
+
+		for (int k = i; k > 0 && b[k] < b[k - 1]; k--) {
+
+			int c = b[k]; 
+			b[k] = b[k - 1];
+			b[k - 1] = c;
+		}
+	show(b, n);
+	system("pause");
+	delete[] a;
+	delete[] b;
+	return 0;
+}

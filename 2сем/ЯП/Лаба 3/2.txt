@@ -1,0 +1,28 @@
+#define xFirst  1
+#define xLast  10
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main()
+{
+	int count = 0;
+	double eps = 0.0001;
+	float x = 0, y = 0;
+	double dx = 1;
+	cout << "Arg\tResult\t\tCount" << endl;
+	for (x = xFirst; x < xLast; x += dx)
+	{
+		count = 0;
+		y = 0;
+		double n = 1;
+		for(int i = 1; n - eps > 0; i+=2 )
+		{
+			n = pow(x - 1,i)/ (pow(x + 1, i)*i);
+			y += n;
+			count++;
+		}
+		cout << x << '\t' << 2*y << "       \t"  << count << endl;
+	}
+	system("pause");
+	return 0;
+}
